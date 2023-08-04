@@ -1,6 +1,8 @@
 import 'dotenv/config';
-import './renderer.js'
-import { renderRecipe } from './renderer.js';
+import 'core-js/stable';    // Added to Polyfill
+import 'regenerator-runtime/runtime.js';    // Added to Polyfill
+
+import { renderRecipe, renderSpinner } from './renderer.js';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -17,6 +19,7 @@ const timeout = function (s) {
 ///////////////////////////////////////
 
 async function showRecipe () {
+    renderSpinner(recipeContainer);
     try {
         const response = await fetch('https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886');
         const data = await response.json();
@@ -34,14 +37,12 @@ async function showRecipe () {
             servings: recipe.servings,
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
-        }
+        };
 
-        console.log(recipe);
+        const markup = renderRecipe(recipe);
 
-        const markup = renderRecipe(recipe)
-
-        recipeContainer.innerHTML = ''
-        recipeContainer.insertAdjacentHTML('afterbegin', markup)
+        recipeContainer.innerHTML = '';
+        recipeContainer.insertAdjacentHTML('afterbegin', markup);
 
     } catch (error) {
         alert(error);
