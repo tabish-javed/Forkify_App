@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import './renderer.js'
+import { renderRecipe } from './renderer.js';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -33,7 +35,13 @@ async function showRecipe () {
             cookingTime: recipe.cooking_time,
             ingredients: recipe.ingredients
         }
+
         console.log(recipe);
+
+        const markup = renderRecipe(recipe)
+
+        recipeContainer.innerHTML = ''
+        recipeContainer.insertAdjacentHTML('afterbegin', markup)
 
     } catch (error) {
         alert(error);
