@@ -26,6 +26,7 @@ async function controlRecipes () {
         const recipeID = window.location.hash.slice(1);
         if (!recipeID) return;
 
+        // Render spinner
         recipeView.renderSpinner();
 
         // Loading recipe
