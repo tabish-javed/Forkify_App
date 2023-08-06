@@ -1,5 +1,4 @@
 // Internal imports
-import 'dotenv/config';
 import 'core-js/stable';    // Added to Polyfill
 import 'regenerator-runtime/runtime.js';    // Added to Polyfill
 
@@ -28,10 +27,8 @@ async function controlRecipes () {
 
         // Render spinner
         recipeView.renderSpinner();
-
         // Loading recipe
         await model.loadRecipe(recipeID);
-
         // Render recipe
         recipeView.render(model.state.recipe)
 
