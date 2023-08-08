@@ -10,9 +10,9 @@ import resultsView from './views/resultsView.js';
 
 // https://forkify-api.herokuapp.com/v2
 
-if (module.hot) {
-    module.hot.accept();
-}
+// if (module.hot) {
+//     module.hot.accept();
+// }
 
 async function controlRecipes () {
     try {
@@ -44,7 +44,7 @@ async function controlSearchResults () {
         await model.loadSearchResults(query);
 
         // 3 - Render search results
-        resultsView.render(model.state.search.results);
+        resultsView.render(model.getSearchResultsPage());
     } catch (error) {
         console.log(error);
     }
