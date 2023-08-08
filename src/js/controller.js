@@ -6,8 +6,13 @@ import 'regenerator-runtime/runtime.js';    // Added to Polyfill
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 // https://forkify-api.herokuapp.com/v2
+
+if (module.hot) {
+    module.hot.accept();
+}
 
 async function controlRecipes () {
     try {
@@ -29,6 +34,8 @@ async function controlRecipes () {
 
 async function controlSearchResults () {
     try {
+        resultsView.renderSpinner();
+
         // 1 - Get search query
         const query = searchView.getQuery();
         if (!query) return;
@@ -37,7 +44,7 @@ async function controlSearchResults () {
         await model.loadSearchResults(query);
 
         // 3 - Render search results
-        console.log(model.state.search.results);
+        resultsView.render(model.state.search.results);
     } catch (error) {
         console.log(error);
     }
