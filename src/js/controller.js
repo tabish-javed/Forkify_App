@@ -5,11 +5,9 @@ import 'regenerator-runtime/runtime.js';    // Added to Polyfill
 // External imports
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
-
+import searchView from './views/searchView.js';
 
 // https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
 
 async function controlRecipes () {
     try {
@@ -21,17 +19,34 @@ async function controlRecipes () {
         // Loading recipe
         await model.loadRecipe(recipeID);
         // Render recipe
-        recipeView.render(model.state.recipe)
+        recipeView.render(model.state.recipe);
 
     } catch (error) {
-        recipeView.renderErrorMessage()
+        recipeView.renderErrorMessage();
     }
 }
 
 
-function init () {
-    recipeView.addHandlerRender(controlRecipes)
+async function controlSearchResults () {
+    try {
+        // 1 - Get search query
+        const query = searchView.getQuery();
+        if (!query) return;
+
+        // 2 - Load search results
+        await model.loadSearchResults(query);
+
+        // 3 - Render search results
+        console.log(model.state.search.results);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
-init()
+
+function init () {
+    recipeView.addHandlerRender(controlRecipes);
+    searchView.addHandlerSearch(controlSearchResults);
+}
+init();
