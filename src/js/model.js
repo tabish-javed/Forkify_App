@@ -50,6 +50,7 @@ export async function loadSearchResults (query) {
     }
 }
 
+
 export function getSearchResultsPage (page = state.search.page) {
     state.search.page = page;
 
@@ -57,4 +58,13 @@ export function getSearchResultsPage (page = state.search.page) {
     const end = page * state.search.resultsPerPage; // 9;
 
     return state.search.results.slice(start, end);
+}
+
+
+export function updateServings (servings) {
+    state.recipe.ingredients.forEach(ingredient => {
+        ingredient.quantity = ingredient.quantity * servings / state.recipe.servings;
+    });
+
+    state.recipe.servings = servings;
 }
