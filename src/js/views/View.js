@@ -13,9 +13,8 @@ export default class View {
     }
 
 
+    // This update method is used to update DOM elements without reloading container elements.
     update (data) {
-        if (!data || (Array.isArray(data) && data.length === 0)) return this.renderErrorMessage();
-
         this._data = data;
         const newMarkup = this._generateMarkup();
 
