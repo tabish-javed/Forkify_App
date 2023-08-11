@@ -2,6 +2,7 @@
 import { API_URL, RESULTS_PER_PAGE } from "./config";
 import { getJSON } from "./helpers";
 
+
 export const state = {
     recipe: {},
     search: {

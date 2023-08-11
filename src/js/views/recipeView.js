@@ -4,6 +4,7 @@ import icons from 'url:../../img/icons.svg';
 // External imports
 import View from './View';
 
+
 class RecipeView extends View {
     _parentElement = document.querySelector('.recipe');
     _errorMessage = `We could not find that recipe. Please try another one!`;
