@@ -106,12 +106,46 @@ export function deleteBookmark (id) {
 }
 
 
+export async function uploadRecipe (newRecipe) {
+    try {
+        const ingredients = Object.entries(newRecipe)
+            .filter(entry => entry[0].startsWith('ingredient') &&
+                entry[1] !== '')
+            .map(ingredient => {
+                const ingredientArray = ingredient[1].replaceAll(' ', '').split(',');
+                if (ingredientArray.length !== 3) throw new Error('Wrong ingredient format, please use the correct format');
+                const [quantity, unit, description] = ingredientArray;
+                return { quantity: quantity ? +quantity : null, unit, description };
+                // Object properties are mentioned without value, as values are implicitly added.
+                // this is is same as explicitly mentioning values in following code
+                // return { quantity: quantity, unit: unit, description: description };
+            });
+
+        const recipe = {
+            title: newRecipe.title,
+            source_url: newRecipe.sourceURL,
+            image_url: newRecipe.imageURL,
+            publisher: newRecipe.publisher,
+            cooking_time: +newRecipe.cookingTime,
+            servings: +newRecipe.servings,
+            ingredients
+        };
+
+
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+
 function init () {
     const storage = localStorage.getItem('bookmarks');
     if (storage) state.bookmarks = JSON.parse(storage);
 }
 init();
-console.log(state.bookmarks);
 
 
 function clearBookmarks () {

@@ -102,10 +102,13 @@ function controlBookmarks () {
 }
 
 
-function controlAddRecipe (newRecipe) {
-    console.log(newRecipe);
-
-    // Upload the new recipe data
+async function controlAddRecipe (newRecipe) {
+    try {
+        // Upload the new recipe data
+        await model.uploadRecipe(newRecipe);
+    } catch (error) {
+        addRecipeView.renderErrorMessage(error.message);
+    }
 }
 
 
