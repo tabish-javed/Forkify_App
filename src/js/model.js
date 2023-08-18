@@ -1,6 +1,6 @@
 // import { async } from 'regenerator-runtime';
-import { API_URL, RESULTS_PER_PAGE } from "./config";
-import { getJSON } from "./helpers";
+import { API_URL, API_KEY, RESULTS_PER_PAGE } from "./config";
+import { getJSON, sendJSON } from "./helpers";
 
 
 export const state = {
@@ -107,6 +107,7 @@ export function deleteBookmark (id) {
 
 
 export async function uploadRecipe (newRecipe) {
+    console.log(newRecipe);
     try {
         const ingredients = Object.entries(newRecipe)
             .filter(entry => entry[0].startsWith('ingredient') &&
@@ -123,15 +124,16 @@ export async function uploadRecipe (newRecipe) {
 
         const recipe = {
             title: newRecipe.title,
-            source_url: newRecipe.sourceURL,
-            image_url: newRecipe.imageURL,
+            source_url: newRecipe.sourceUrl,
+            image_url: newRecipe.image,
             publisher: newRecipe.publisher,
             cooking_time: +newRecipe.cookingTime,
             servings: +newRecipe.servings,
             ingredients
         };
 
-
+        const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
+        console.log(data);
 
     } catch (error) {
         console.error(error);
