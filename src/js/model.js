@@ -58,7 +58,8 @@ export async function loadSearchResults (query) {
                 id: recipe.id,
                 title: recipe.title,
                 publisher: recipe.publisher,
-                imageURL: recipe.image_url,
+                // imageURL: recipe.image_url,     // TODO - Same as Line #28 in function createRecipeObject
+                ...(recipe.image_url && { imageURL: [recipe.image_url.slice(0, 4), 's', recipe.image_url.slice(4)].join('') }),
                 ...(recipe.key && { key: recipe.key }),
             };
         });
