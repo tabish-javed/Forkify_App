@@ -24,6 +24,7 @@ function createRecipeObject (data) {
         publisher: recipe.publisher,
         sourceURL: recipe.source_url,
         // imageURL: recipe.image_url,
+        // Replaced above line with following to insert "s" in http(s)://url>
         ...(recipe.image_url && { imageURL: [recipe.image_url.slice(0, 4), 's', recipe.image_url.slice(4)].join('') }),
         servings: recipe.servings,
         cookingTime: recipe.cooking_time,
