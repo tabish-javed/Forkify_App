@@ -3,3 +3,5 @@ package-lock.json
 .parcel*
 dist/
 .env
+# Local Netlify folder
+.netlify

@@ -1,5 +1,5 @@
 // Internal imports
-import { Fraction } from 'fractional';
+import { fraction } from 'mathjs';
 import icons from 'url:../../img/icons.svg';
 // External imports
 import View from './View';
@@ -106,7 +106,7 @@ class RecipeView extends View {
           >
             <span>Directions</span>
             <svg class="search__icon">
-              <use href="src/img/icons.svg#icon-arrow-right"></use>
+              <use href="${icons}#icon-arrow-right"></use>
             </svg>
           </a>
         </div>`;
@@ -119,7 +119,7 @@ class RecipeView extends View {
               <svg class="recipe__icon">
                 <use href="${icons}#icon-check"></use>
               </svg>
-              <div class="recipe__quantity">${ingredient.quantity ? new Fraction(ingredient.quantity).toString() : ''
+              <div class="recipe__quantity">${ingredient.quantity ? fraction(ingredient.quantity).toString() : ''
             }</div>
               <div class="recipe__description">
                 <span class="recipe__unit">${ingredient.unit}</span>
