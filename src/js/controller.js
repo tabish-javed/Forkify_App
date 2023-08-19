@@ -1,6 +1,7 @@
 // Internal imports
 import 'core-js/stable';    // Added to Polyfill
 import 'regenerator-runtime/runtime.js';    // Added to Polyfill
+import { MODEL_CLOSE_SEC } from './config.js';
 
 // External imports
 import * as model from './model.js';
@@ -104,8 +105,23 @@ function controlBookmarks () {
 
 async function controlAddRecipe (newRecipe) {
     try {
+        // Show loading spinner
+        addRecipeView.renderSpinner();
+
         // Upload the new recipe data
         await model.uploadRecipe(newRecipe);
+        console.log(model.state.recipe);
+
+        // Render recipe
+        recipeView.render(model.state.recipe);
+
+        // Success message
+        addRecipeView.renderSuccessMessage();
+
+        // Close from window
+        setTimeout(() => {
+            addRecipeView.toggleWindow();
+        }, MODEL_CLOSE_SEC * 1_000);
     } catch (error) {
         addRecipeView.renderErrorMessage(error.message);
     }
